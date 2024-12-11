@@ -34,3 +34,9 @@ export const schedules = {
         "11/12/2024": [{ "start": "09:00", "end": "10:30" }]
     }
 };
+
+
+//threshold data 
+export const thresholds = {
+    1 : { "09/12/2024" :["01:00-01:30", "02:00-02:30", "03:00-03:30", "04:00-04:30"]}, 
+}
