@@ -1,7 +1,7 @@
 
 'use client'
 
-import {useState} from "react"
+import {JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useState} from "react"
 import { format } from "date-fns"
 import { Calendar } from "@/components/ui/calendar"
 import { Button } from "@/components/ui/button"
@@ -53,14 +53,14 @@ export default function Home() {
   //   fetchParticipants();
   // },[])
 
-  function splitTimeSlots(startTime, endTime, intervalMinutes = 30) {
+  function splitTimeSlots(startTime: any, endTime: any, intervalMinutes = 30) {
     const timeIntervals = [];
-    const toMinutes = (timeStr) => {
+    const toMinutes = (timeStr: { split: (arg0: string) => { (): any; new(): any; map: { (arg0: NumberConstructor): [any, any]; new(): any } } }) => {
         const [hours, minutes] = timeStr.split(':').map(Number);
         return hours * 60 + minutes;
     };
 
-    const toTimeString = (totalMinutes) => {
+    const toTimeString = (totalMinutes: number) => {
         const hours = Math.floor(totalMinutes / 60);
         const minutes = totalMinutes % 60;
         return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
@@ -88,10 +88,10 @@ const submitCheckSlot = async() => {
         const date = format(currentDate, "dd/MM/yyyy");
         const dayOfWeek = format(currentDate, "EEEE");
 
-        let repeatedValues = null; // Start with null to handle empty cases
+        let repeatedValues: any[] | null = null; // Start with null to handle empty cases
         selectedParticipants.forEach((participant) => {
-            let participantSlots = [];
-            let scheduleSlots = []
+            let participantSlots: any[] = [];
+            let scheduleSlots: any[] = []
             participantAvailability[participant][dayOfWeek]?.forEach(({ start, end }) => {
                 const singleSlot = splitTimeSlots(start, end);
                 participantSlots = participantSlots.concat(singleSlot);
@@ -102,14 +102,14 @@ const submitCheckSlot = async() => {
                 repeatedValues = participantSlots;
             } else {
               // Intersect with the current participant's slots
-              repeatedValues = repeatedValues.filter(value => participantSlots.includes(value));
+              repeatedValues = repeatedValues.filter((value: any) => participantSlots.includes(value));
             }
 
             schedules[participant][date]?.forEach(({ start, end }) => {
               const scheduledTimes = splitTimeSlots(start, end);
               scheduleSlots = scheduleSlots.concat(scheduledTimes);
             });
-            repeatedValues = repeatedValues.filter(value=>!scheduleSlots.includes(value))
+            repeatedValues = repeatedValues.filter((value: any)=>!scheduleSlots.includes(value))
         });
 
         // If no overlapping slots, set as an empty array
@@ -229,7 +229,7 @@ const submitCheckSlot = async() => {
               <span className="w-20 text-sm">{date}</span>
               <span>:</span>
               <div className="flex flex-wrap gap-2">
-                {timeSlots?.map((slot,index) => (
+                {timeSlots?.map((slot: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined,index: Key | null | undefined) => (
                   <Button
                     key={index}
                     variant="secondary"
