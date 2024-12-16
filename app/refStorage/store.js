@@ -19,9 +19,9 @@ export const participantAvailability = {
     },
     3: {
         "Monday": [{ "start": "09:00", "end": "18:00" }],
-        "Tuesday": [{ "start": "09:00", "end": "18:00"}]
+        "Tuesday": [{ "start": "09:00", "end": "18:00" }]
     }
-}
+};
 
 export const schedules = {
     1: {
@@ -36,7 +36,8 @@ export const schedules = {
 };
 
 
-//threshold data 
-export const thresholds = {
-    1 : { "09/12/2024" :["01:00-01:30", "02:00-02:30", "03:00-03:30", "04:00-04:30"]}, 
+const th = {
+    1: {
+        "12/12/2024": []
+    }
 }
