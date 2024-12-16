@@ -52,98 +52,6 @@ export default function Home() {
     return timeIntervals;
   }
 
- 
-  // const checkParticipantAvailableSlots = async () => {
-  //   let currentDate = new Date(startDate); // Starting date
-  //   const obj = {}; // To store the available slots
-
-  //   if (!startDate || !endDate || selectedParticipants.length === 0) {
-  //     alert("Please select Participants and Dates");
-  //     return;
-  //   }
-
-  //   const isValidSlot = (slot) => {
-  //     const [start, end] = slot.split("-");
-  //     const toMinutes = (timeStr) => {
-  //       const [hours, minutes] = timeStr.split(":").map(Number);
-  //       return hours * 60 + minutes;
-  //     };
-  //     const duration = toMinutes(end) - toMinutes(start);
-  //     return duration === 30; // Valid slot must be exactly 30 minutes
-  //   };
-
-  //   while (currentDate <= new Date(endDate)) {
-  //     const date = format(currentDate, "dd/MM/yyyy"); // Format the current date
-  //     const dayOfWeek = format(currentDate, "EEEE"); // Get the day of the week
-  //     let repeatedValues = null; // Initialize repeated values for intersection
-
-  //     selectedParticipants.forEach((participant_id) => {
-  //       let participantSlots = [];
-  //       let scheduleSlots = [];
-
-  //       // Fetch participant's available slots for the day of the week
-  //       if (
-  //         participantAvailability[participant_id] &&
-  //         participantAvailability[participant_id][dayOfWeek]
-  //       ) {
-  //         participantAvailability[participant_id][dayOfWeek]?.forEach(
-  //           ({ start, end }) => {
-  //             const singleSlot = splitTimeSlots(start, end);
-  //             participantSlots = participantSlots.concat(singleSlot);
-  //           }
-  //         );
-  //       }
-
-  //       // Initialize repeatedValues with the first participant's slots
-  //       if (repeatedValues === null) {
-  //         repeatedValues = participantSlots;
-  //       } else {
-  //         // Intersect with the current participant's slots
-  //         repeatedValues = repeatedValues.filter((value) =>
-  //           participantSlots.includes(value)
-  //         );
-  //       }
-
-  //       // Fetch participant's scheduled slots for the specific date
-  //       if (schedules[participant_id] && schedules[participant_id][date]) {
-  //         schedules[participant_id][date]?.forEach(({ start, end }) => {
-  //           const scheduledTimes = splitTimeSlots(start, end);
-  //           scheduleSlots = scheduleSlots.concat(scheduledTimes);
-  //         });
-  //       }
-
-  //       // Remove scheduled slots from the available slots
-  //       repeatedValues = repeatedValues.filter((value) => {
-  //         const [slotStart, slotEnd] = value.split("-");
-
-  //         // Check if any part of the slot overlaps with scheduled times
-  //         const isSlotOverlapping = scheduleSlots.some((scheduledSlot) => {
-  //           const [scheduledStart, scheduledEnd] = scheduledSlot.split("-");
-  //           return (
-  //             (slotStart >= scheduledStart && slotStart < scheduledEnd) || // Slot starts during a scheduled time
-  //             (slotEnd > scheduledStart && slotEnd <= scheduledEnd) || // Slot ends during a scheduled time
-  //             (slotStart <= scheduledStart && slotEnd >= scheduledEnd) // Slot fully overlaps a scheduled time
-  //           );
-  //         });
-
-  //         // Ensure slot is exactly 30 minutes and not overlapping
-  //         return isValidSlot(value) && !isSlotOverlapping;
-  //       });
-  //     });
-
-  //     // If there are valid slots, add them to the result
-  //     if (repeatedValues && repeatedValues.length) {
-  //       obj[date] = repeatedValues;
-  //     }
-
-  //     // Move to the next day
-  //     currentDate = new Date(currentDate.setDate(currentDate.getDate() + 1));
-  //   }
-
-  //   setAvailableSlots(obj);
-  // };
-
-
   //start
 
   const checkParticipantAvailableSlots = async () => {
@@ -203,7 +111,6 @@ export default function Home() {
           );
         }
 
-        console.log(repeatedValues ,"repeatedValues");
         
 
   
@@ -220,11 +127,9 @@ export default function Home() {
         // Remove scheduled slots and enforce the threshold
         repeatedValues = repeatedValues.filter((value) => {           // '09:00-09:30'
           const [slotStart, slotEnd] = value.split("-");              // => [ '09:00', '09:30' ] ,[slotStart, slotEnd]
-          console.log(slotStart, "slotStart====", slotEnd, "=====slotEnd");
           
-          const isSlotOverlapping = scheduleSlots.some((scheduledSlot) => {
-            const [scheduledStart, scheduledEnd] = scheduledSlot.split("-");  
-          console.log(scheduledStart, "scheduledStart====", scheduledEnd, "=====scheduledEnd");
+          const isSlotOverlapping = scheduleSlots.some((scheduledSlot) => {    
+            const [scheduledStart, scheduledEnd] = scheduledSlot.split("-");  // [ '09:30', '10:00' ] first iteration in first filter
 
             return (
               (slotStart >= scheduledStart && slotStart < scheduledEnd) || // Slot starts during a scheduled time
